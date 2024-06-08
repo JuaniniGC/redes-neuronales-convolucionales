@@ -6,15 +6,17 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 import os
 
-# Directorio de datos
-data_dir = 'data' 
+# Directorios para los datos divididos
+train_dir = 'output/train'
+val_dir = 'output/val'
+
 
 # Parámetros
 img_height = 150
 img_width = 150
 batch_size = 32
 
-# Generador de datos de entrenamiento
+# Generador de datos de entrenamiento con augmentación
 train_datagen = ImageDataGenerator(
     rescale=1./255, 
     shear_range=0.2,
@@ -22,22 +24,22 @@ train_datagen = ImageDataGenerator(
     width_shift_range=0.2,
     height_shift_range=0.2,
     zoom_range=0.2,
-    horizontal_flip=True,
-    validation_split=0.2)  # Usa el 20% de los datos para validación
+    horizontal_flip=True)
+
+# Generador de datos de validación solo con reescalado
+val_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-    data_dir,
+    train_dir,
     target_size=(img_height, img_width),
     batch_size=batch_size,
-    class_mode='categorical',
-    subset='training')  # Usa los datos de entrenamiento
+    class_mode='categorical')
 
-validation_generator = train_datagen.flow_from_directory(
-    data_dir,
+validation_generator = val_datagen.flow_from_directory(
+    val_dir,
     target_size=(img_height, img_width),
     batch_size=batch_size,
-    class_mode='categorical',
-    subset='validation')  # Usa los datos de validación
+    class_mode='categorical')
 
 model = Sequential([
     Conv2D(64, (3, 3), activation='relu', input_shape=(img_height, img_width, 3)),
@@ -52,8 +54,6 @@ model = Sequential([
     Dense(512, activation='relu'),
     Dense(train_generator.num_classes, activation='softmax')
 ])
-
-
 
 model.compile(optimizer='adam',
               loss='categorical_crossentropy',

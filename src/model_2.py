@@ -62,8 +62,6 @@ model.compile(optimizer='adam',
 # Entrenamiento
 
 epochs = 40  
-#steps_per_epoch = train_generator.n // batch_size
-#validation_steps = validation_generator.n // batch_size
 
 history = model.fit(
     train_generator,

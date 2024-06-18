@@ -10,7 +10,6 @@ import os
 train_dir = 'output/train'
 val_dir = 'output/val'
 
-
 # Parámetros
 img_height = 150
 img_width = 150
@@ -62,8 +61,6 @@ model.compile(optimizer='adam',
 # Entrenamiento
 
 epochs = 40  
-#steps_per_epoch = train_generator.n // batch_size
-#validation_steps = validation_generator.n // batch_size
 
 history = model.fit(
     train_generator,

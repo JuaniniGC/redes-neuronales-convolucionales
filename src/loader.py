@@ -13,7 +13,7 @@ img_width = 150
 batch_size = 32
 val_dir = 'output/val'
 
-# Generador de datos de validación solo con reescalado
+# Generador de datos de validación
 val_datagen = ImageDataGenerator(rescale=1./255)
 
 validation_generator = val_datagen.flow_from_directory(
@@ -23,7 +23,7 @@ validation_generator = val_datagen.flow_from_directory(
     class_mode='categorical')
 
 # Cargar el modelo
-model = load_model('model_1.keras')
+model = load_model('model_3.keras')
 
 # Verificar la arquitectura del modelo
 model.summary()

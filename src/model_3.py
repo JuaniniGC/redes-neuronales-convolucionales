@@ -17,18 +17,12 @@ img_height = 150
 img_width = 150
 batch_size = 32
 
-# Generador de datos de entrenamiento con augmentación
+# Generador de datos de entrenamiento
 train_datagen = ImageDataGenerator(
     rescale=1./255, 
-    #shear_range=0.2,
-    #rotation_range=40,
-    #width_shift_range=0.2,
-    #height_shift_range=0.2,
-    #zoom_range=0.2,
-    #horizontal_flip=True
     )
 
-# Generador de datos de validación solo con reescalado
+# Generador de datos de validación
 val_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
@@ -64,8 +58,6 @@ model.compile(optimizer='adam',
 # Entrenamiento
 
 epochs = 40 
-#steps_per_epoch = train_generator.n // batch_size
-#validation_steps = validation_generator.n // batch_size
 
 history = model.fit(
     train_generator,
